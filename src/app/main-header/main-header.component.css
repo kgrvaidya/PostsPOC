@@ -1,0 +1,44 @@
+.header-base{
+    position: sticky;
+    top : 0px;
+    width : 100%;
+    min-height : 50px;
+    background : #1c5f5f;
+    vertical-align: center;
+    padding : 5px 10px;
+}
+
+h1{
+    font-size : 24px;
+    line-height : 28px;
+    font-weight : 400;
+}
+
+h1.logo{
+    display : inline-block;
+    font-size : 35px;
+    line-height : 32px;
+    font-weight : 300;
+    color : white;
+}
+
+.main-nav{
+    float : right;
+}
+
+.main-nav:after{
+    clear : both;
+}
+
+.main-nav a{
+    display : block;
+    text-decoration : none;
+    padding-top : 8px;
+    font-weight : 100;
+    margin-right : 10px;
+    color : white;
+}
+
+.main-nav a:hover{
+    color : silver;
+}

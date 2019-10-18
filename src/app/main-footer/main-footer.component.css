@@ -1,0 +1,11 @@
+.main-footer {
+    height : 30px;
+    line-height : 24px;
+    font-size : 15px;
+    font-weight : 100;
+    text-align : center;
+    padding : 4px;
+    background : #1c5f5f;
+    bottom : 0;
+    color : white;
+}
