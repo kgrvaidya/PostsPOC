@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
@@ -45,7 +44,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-=======
 # Logs
 logs
 *.log
@@ -107,4 +105,3 @@ typings/
 
 # next.js build output
 .next
->>>>>>> 8f0bd20081ee4720b5b9a3ae53666df244450c6a
