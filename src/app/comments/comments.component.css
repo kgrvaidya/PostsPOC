@@ -32,11 +32,11 @@ p.posts-showing-detail{
 ul.pagination-list{
     list-style:none;
     text-align: center;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     display: inline-block;    
 }
 
-ul.pagination-list li{
+ul.pagination-list li, span.btn{
     display: inline-block;
     padding : 5px;
     font-weight : 700;
@@ -46,7 +46,6 @@ ul.pagination-list li{
     margin : 0 2px;
     background : white;
     border-radius : 50%;
-
 }
 
 ul.pagination-list li:hover{

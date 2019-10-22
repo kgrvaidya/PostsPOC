@@ -1,0 +1,24 @@
+<div class="main-container">
+    <section>
+        <H1 class="page-title">Comments</H1>
+        <div *ngIf="loaded">
+            <P class="posts-showing-detail">(Showing {{Commentstart}} to {{commentsEnd}} of {{Comments.length}} Comments)</P>
+            <div *ngFor="let comment of slicedComments" class="post">
+                <p><span>{{comment.id}}. </span>{{comment.body}}</p>
+            </div>
+            <div class="pagination"> 
+                <span class="btn"> &#8810; </span>
+                <span class="btn previous-btn"> &lt; </span>
+                <ul class="pagination-list">
+                    <li 
+                        *ngFor="let page of Pages; let i = index" 
+                        [ngClass]="(i)===pointedIndex ? 'active' : ''" 
+                        key=i 
+                        (click)="onClick(i)">{{page}}</li>
+                </ul>
+                <span class="btn next-btn"> &gt; </span>
+                <span class="btn"> &#8811; </span>
+            </div>
+        </div>
+    </section>
+</div>

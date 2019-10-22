@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from "../data.service";
 
 
 @Component({
@@ -19,9 +20,19 @@ export class MainContainerComponent implements OnInit {
   postStart:number=1;
   postEnd:number=this.postStart+ this.postsPerPage - 1;
 
-  constructor() { this.fetchData();}
+  constructor(private ps : DataService) { }
   
   ngOnInit() { 
+    this.ps.getPosts().then((postsList) => {
+      this.posts = postsList;
+    })
+    .then(() => {
+      this.totalPosts = this.posts.length;
+      this.getPageList();
+      this.paginate(1);
+      this.loaded = true;
+    })
+
   }
 
   paginate(clickedPage) {
@@ -41,18 +52,5 @@ export class MainContainerComponent implements OnInit {
   onClick(page){
     this.paginate(page);
   }
-
-  fetchData(){
-    fetch('https://jsonplaceholder.typicode.com/posts/')
-    .then(response => response.json())
-    .then(json => this.posts = json)
-    .then(() => { 
-      this.totalPosts = this.posts.length;
-      this.getPageList();
-      this.paginate(1);
-      this.loaded = true;
-    });
-  }
-  
 
 }
