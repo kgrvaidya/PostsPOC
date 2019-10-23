@@ -20,9 +20,10 @@ export class Pagination {
     
     ngOnInit() { }
 
-    setData(data) {
+    setData(data):number {
         this.Data = data;
         this.noOfPages = Math.ceil(this.Data.length / this.DataPerPage);
+        return this.noOfPages;
     }
 
     paginate(clickedPage) : any[] {
@@ -32,8 +33,20 @@ export class Pagination {
         return this.newData;    
     }
 
+    previousPage (page) {
+        if(page > 1) {
+            this.paginate(page-1)
+        }
+    }
+
+    nextPage(page){
+        if(page != this.pagesList[this.listLength-1]){
+            this.paginate(page+1);
+        }
+    }
+
     getPageList(currPage) : any[] {
-        console.log("Inside getPageList ",this.noOfPages,this.listLength);
+        console.log("Clicked Page : ", currPage);
         
         // If pages are more than 5, display set of 5 pages
         this.pagesList = [];
@@ -45,13 +58,13 @@ export class Pagination {
         
         else {
             if((this.noOfPages - currPage) > 5) {   
-                console.log("Difference : ", (this.noOfPages - currPage), "Total Pages : ",this.noOfPages, "Current Page : ", currPage)             
+                // console.log("Difference : ", (this.noOfPages - currPage), "Total Pages : ",this.noOfPages, "Current Page : ", currPage)             
                 
                 for(let i=0; i<this.listLength; i++){
                     this.pagesList.push(currPage + i);
                     // console.log("when there are atleast 5 pages b/w current page and last page");
                 }
-                console.log(this.pagesList);
+                // console.log(this.pagesList);
             }
             else {
                 for(let i = (this.noOfPages - 5); i<=this.noOfPages; i++){

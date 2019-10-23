@@ -7,8 +7,8 @@
                 <p><span>{{comment.id}}. </span>{{comment.body}}</p>
             </div>
             <div class="pagination"> 
-                <span class="btn"> &#8810; </span>
-                <span class="btn previous-btn"> &lt; </span>
+                <span class="btn" (click)="firstPage()"> &#8810; </span>
+                <span class="btn previous-btn" (click)="previous()"> &lt; </span>
                 <ul class="pagination-list">
                     <li 
                         *ngFor="let page of Pages; let i = index" 
@@ -16,8 +16,8 @@
                         key=i 
                         (click)="onClick(i)">{{page}}</li>
                 </ul>
-                <span class="btn next-btn"> &gt; </span>
-                <span class="btn"> &#8811; </span>
+                <span class="btn next-btn" (click)="next()"> &gt; </span>
+                <span class="btn" (click)="lastPage()"> &#8811; </span>
             </div>
         </div>
     </section>
