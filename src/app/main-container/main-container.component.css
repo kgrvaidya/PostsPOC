@@ -32,12 +32,13 @@ p.posts-showing-detail{
 ul.pagination-list{
     list-style:none;
     text-align: center;
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     display: inline-block;    
 }
 
-ul.pagination-list li{
+ul.pagination-list li, span.btn{
     display: inline-block;
+    cursor: pointer;
     padding : 5px;
     font-weight : 700;
     font-size : 10px;
@@ -46,16 +47,16 @@ ul.pagination-list li{
     margin : 0 2px;
     background : white;
     border-radius : 50%;
-
 }
 
-ul.pagination-list li:hover{
-    cursor: pointer;
+ul.pagination-list li.active {
+    color:white;
+    background:rgb(7, 178, 245);
 }
 
-.active {
-    background:white;
-    color:red;
+ul.pagination-list li:hover, span.btn:hover{
+    background : black;
+    color : white;
 }
 
 .pagination{

@@ -2,15 +2,23 @@
     <section>
         <H1 class="page-title">Posts</H1>
         <div *ngIf="loaded">
-            <P class="posts-showing-detail">(Showing {{postStart}} to {{postEnd}} of 100 posts)</P>
+            <P class="posts-showing-detail">(Showing {{start}} to {{end}} of {{posts.length}} Posts)</P>
             <div *ngFor="let post of newPosts" class="post">
                 <p><span>{{post.id}}. </span>{{post.body}}</p>
             </div>
-            <div class="pagination">
-                <ul class="pagination-list">
-                    <li *ngFor="let pages of pagesList; index as i" [ngClass]="(i+1)===currentPage ? 'active' : '' " key=i (click)="onClick(i+1)">{{pages}}</li>
-                </ul>
-            </div>
+            <div class="pagination"> 
+                    <span class="btn" (click)="firstPage()"> &#8810; </span>
+                    <span class="btn previous-btn" (click)="previous()"> &lt; </span>
+                    <ul class="pagination-list">
+                        <li 
+                            *ngFor="let page of Pages; let i = index" 
+                            [ngClass]="(i)===pointedIndex ? 'active' : ''" 
+                            key=i 
+                            (click)="onClick(i)">{{page}}</li>
+                    </ul>
+                    <span class="btn next-btn" (click)="next()"> &gt; </span>
+                    <span class="btn" (click)="lastPage()"> &#8811; </span>
+                </div>
         </div>
     </section>
 </div>

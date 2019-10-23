@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from "../data.service";
+import { Pagination } from "../pagination.service";
+
 
 
 @Component({
@@ -10,47 +12,67 @@ import { DataService } from "../data.service";
 export class MainContainerComponent implements OnInit {
 
   posts:any[] = [];
-  pagesList:number[] = [];
-  loaded:boolean = false;
-  postsPerPage:number = 20;
-  noOfPages:number = 1;
-  currentPage:number=1;
-  totalPosts=0;
-  newPosts:any[] = [];
-  postStart:number=1;
-  postEnd:number=this.postStart+ this.postsPerPage - 1;
+  newPosts : any[] = [];
+  Pages : any[];
+  totalPages:number;
+  loaded:Boolean = false;
+  currentPage:number = 1;
+  pointedIndex = 0;
+  start:number;
+  end:number;
 
-  constructor(private ps : DataService) { }
+  constructor(private ps : DataService, private pagination:Pagination) { }
   
   ngOnInit() { 
-    this.ps.getPosts().then((postsList) => {
-      this.posts = postsList;
+    this.ps.getPosts().then((Posts) => {
+      this.posts = Posts;
     })
     .then(() => {
-      this.totalPosts = this.posts.length;
-      this.getPageList();
-      this.paginate(1);
-      this.loaded = true;
+      this.totalPages = this.pagination.setData(this.posts);
+      this.currentPage = 1;
+      this.setThingsOnPage(1);
     })
 
-  }
-
-  paginate(clickedPage) {
-    this.newPosts = this.posts.slice( (clickedPage-1)*this.postsPerPage, (clickedPage-1)*this.postsPerPage + this.postsPerPage );
-    this.postStart = ((clickedPage-1)*this.postsPerPage + 1);
-    this.postEnd = (clickedPage-1)*this.postsPerPage + this.postsPerPage;
-    this.currentPage = clickedPage;
-  }
-
-  getPageList(){
-    this.noOfPages = Math.ceil(this.posts.length / this.postsPerPage);
-    for(let i=1; i<=this.noOfPages; i++){
-      this.pagesList.push(i);
-    }
   }
 
   onClick(page){
-    this.paginate(page);
+    this.currentPage = this.Pages[page];
+    this.setThingsOnPage(this.currentPage);
+  }
+
+  previous(){
+    if (this.currentPage > 1) {
+      this.setThingsOnPage(this.currentPage - 1);
+      this.currentPage-=1;
+    }
+  }
+
+  next(){
+    if (this.currentPage < this.totalPages) {
+        this.setThingsOnPage(this.currentPage + 1);
+        this.currentPage+=1;
+      }
+  }
+  
+  firstPage(){
+    this.setThingsOnPage(1);
+    this.currentPage=1;
+  }
+
+  lastPage(){
+    this.setThingsOnPage(this.totalPages);
+    this.currentPage = this.totalPages;    
+  }
+
+  setThingsOnPage(pageNumber){
+    this.loaded = false;
+    let res = this.pagination.paginate(pageNumber);
+    this.newPosts = res.data;
+    this.start = res.start;
+    this.end = res.end;
+    this.Pages = this.pagination.getPageList(pageNumber);
+    this.pointedIndex = this.Pages.indexOf(pageNumber);   
+    this.loaded = true;
   }
 
 }

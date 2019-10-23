@@ -8,7 +8,7 @@ export class Pagination {
 
     Data:any[] = [];
     pagesList:any[] = [];
-    DataPerPage:number = 40;
+    DataPerPage:number = 20;
     noOfPages:number = 1;
     currentPage:number = 1;
     newData:any[] = [];
@@ -26,11 +26,16 @@ export class Pagination {
         return this.noOfPages;
     }
 
-    paginate(clickedPage) : any[] {
+    paginate(clickedPage) {
         this.newData = this.Data.slice( (clickedPage-1)*this.DataPerPage, (clickedPage-1)*this.DataPerPage + this.DataPerPage );
         this.DataStart = ((clickedPage-1)*this.DataPerPage + 1);
         this.DataEnd = (clickedPage-1)*this.DataPerPage + this.DataPerPage;
-        return this.newData;    
+        let data = {
+            data : this.newData,
+            start : this.DataStart,
+            end : this.DataEnd
+        }
+        return data;    
     }
 
     previousPage (page) {
@@ -45,41 +50,26 @@ export class Pagination {
         }
     }
 
-    getPageList(currPage) : any[] {
-        console.log("Clicked Page : ", currPage);
+    getPageList(currPage) : any[] {        
+        this.pagesList = []; //Initialise PageList to empty array;
         
-        // If pages are more than 5, display set of 5 pages
-        this.pagesList = [];
-        
-        if(this.noOfPages < this.listLength )
+        if(this.noOfPages < this.listLength ) // If pages are less than 5, display all of the pages
             for(let i=1; i<=this.noOfPages; i++){
                 this.pagesList.push(i);
             }
         
         else {
-            if((this.noOfPages - currPage) > 5) {   
-                // console.log("Difference : ", (this.noOfPages - currPage), "Total Pages : ",this.noOfPages, "Current Page : ", currPage)             
-                
-                for(let i=0; i<this.listLength; i++){
-                    this.pagesList.push(currPage + i);
-                    // console.log("when there are atleast 5 pages b/w current page and last page");
+                if((this.noOfPages - currPage) >= 5) {   //If there are more than 5 pages bewteen current page and last page
+                    for(let i=0; i<this.listLength; i++){
+                        this.pagesList.push(currPage + i);
+                    }
                 }
-                // console.log(this.pagesList);
+                else {
+                    for(let i = (this.noOfPages - 4); i<=this.noOfPages; i++){  //Last 5 pages
+                        this.pagesList.push(i);
+                    }                
+                }  
             }
-            else {
-                for(let i = (this.noOfPages - 5); i<=this.noOfPages; i++){
-                    this.pagesList.push(i);
-                }                
-            }
-            
-        }
-        return this.pagesList;
-
-        
-    }
-
-    onClick(page){
-        this.paginate(page);
-        // this.getPageList(page);
+        return this.pagesList;        
     }
 }

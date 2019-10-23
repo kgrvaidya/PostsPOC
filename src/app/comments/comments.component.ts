@@ -16,6 +16,8 @@ export class CommentsComponent implements OnInit {
   loaded:Boolean = false;
   currentPage:number = 1;
   pointedIndex = 0;
+  start:number;
+  end:number;
 
   constructor(private ps : DataService, private pagination:Pagination) { }
   
@@ -26,21 +28,14 @@ export class CommentsComponent implements OnInit {
     .then(() => {
       this.totalPages = this.pagination.setData(this.Comments);
       this.currentPage = 1;
-      this.pointedIndex = 0;
-      this.slicedComments = this.pagination.paginate(1);
-      this.Pages = this.pagination.getPageList(1);
-      this.loaded = true;
+      this.setThingsOnPage(1);
     })
 
   }
 
   onClick(page){
     this.currentPage = this.Pages[page];
-    this.loaded = false;    
-    this.slicedComments = this.pagination.paginate(this.currentPage);
-    this.Pages = this.pagination.getPageList(this.currentPage);
-    this.pointedIndex = this.Pages.indexOf(this.currentPage);
-    this.loaded = true; 
+    this.setThingsOnPage(this.currentPage); 
   }
 
   previous(){
@@ -69,9 +64,12 @@ export class CommentsComponent implements OnInit {
 
   setThingsOnPage(pageNumber){
     this.loaded = false;
-    this.slicedComments = this.pagination.paginate(pageNumber);
+    let res = this.pagination.paginate(pageNumber);
+    this.slicedComments = res.data;
+    this.start = res.start;
+    this.end = res.end;
     this.Pages = this.pagination.getPageList(pageNumber);
-    this.pointedIndex = this.Pages.indexOf(pageNumber);
+    this.pointedIndex = this.Pages.indexOf(pageNumber);   
     this.loaded = true;
   }
 

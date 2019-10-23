@@ -2,7 +2,7 @@
     <section>
         <H1 class="page-title">Comments</H1>
         <div *ngIf="loaded">
-            <P class="posts-showing-detail">(Showing {{Commentstart}} to {{commentsEnd}} of {{Comments.length}} Comments)</P>
+            <P class="posts-showing-detail">(Showing {{start}} to {{end}} of {{Comments.length}} Comments)</P>
             <div *ngFor="let comment of slicedComments" class="post">
                 <p><span>{{comment.id}}. </span>{{comment.body}}</p>
             </div>
